@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import './sign-up.styles.css';
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 const initialState = {
     email: '',
@@ -30,10 +31,21 @@ const SignUp = ({ handleClick }) => {
     }
     const handleSubmit = async e => {
         e.preventDefault();
-        if (state.password !== state.comfirmPassword) {
+        if (state.password !== state.confirmPassword) {
             alert("Passwords Don't Match");
+            return;
         }
-        console.log("SignUp Form", state);
+
+        try {
+            const { user } = await auth.createUserWithEmailAndPassword(
+                state.email,
+                state.password
+            );
+            await createUserProfileDocument(user);
+        }
+        catch (error) {
+            console.log(error.message)
+        }
     }
 
     return (
