@@ -22,7 +22,7 @@ const reducer = (state, action) => {
 }
 
 
-const SignUp = ({ handleClick }) => {
+const SignUp = ({ toggleIsFlipped }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
 
     const handleChange = e => {
@@ -75,7 +75,7 @@ const SignUp = ({ handleClick }) => {
                     required />
 
                 <input type='submit' name='' value='Sign Up' />
-                <p onClick={handleClick}>Already have an account? Sign In</p>
+                <p onClick={toggleIsFlipped}>Already have an account? Sign In</p>
             </form>
         </div>
     )
