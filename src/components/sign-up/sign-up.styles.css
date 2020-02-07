@@ -56,3 +56,7 @@
  .signup-form input[type = "submit"]:hover {
      background-color: #388bc2;
  }
+
+.sign-up-span:hover {
+     cursor: pointer;
+ }
