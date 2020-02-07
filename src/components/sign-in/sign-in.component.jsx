@@ -48,7 +48,10 @@ const SignIn = ({ toggleIsFlipped }) => {
                     onChange={handleChange}
                     required />
                 <input type='submit' name='' value='Sign In' />
-                <p onClick={toggleIsFlipped}>Don't have an account?  Sign Up</p>
+                <p>Don't have an account?
+                    <span className='sign-in-span'
+                        onClick={toggleIsFlipped}> Sign Up</span>
+                </p>
             </form>
         </div>
     )

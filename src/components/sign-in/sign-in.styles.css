@@ -57,3 +57,7 @@
  .signin-form input[type = "submit"]:hover {
      background-color: #418f61;
  }
+
+ .sign-in-span:hover {
+     cursor: pointer;
+ }

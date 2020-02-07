@@ -75,7 +75,10 @@ const SignUp = ({ toggleIsFlipped }) => {
                     required />
 
                 <input type='submit' name='' value='Sign Up' />
-                <p onClick={toggleIsFlipped}>Already have an account? Sign In</p>
+                <p onClick={toggleIsFlipped}>Already have an account?
+                    <span className='sign-up-span'
+                        onClick={toggleIsFlipped}> Sign In</span>
+                </p>
             </form>
         </div>
     )
