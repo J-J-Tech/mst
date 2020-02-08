@@ -5,6 +5,7 @@ import './App.css';
 
 import SignInUpFlip from './components/sign-in-up-flip/sign-in-up-flip.component';
 import Navbar from './components/navbar/navbar.component';
+import NewEntryForm from './components/new-entry-form/new-entry-form.component';
 
 import { auth, createUserProfileDocument, firestore } from './firebase/firebase.utils';
 
@@ -42,7 +43,7 @@ const App = () => {
           render={() => <SignInUpFlip />}
         />
         <Route exact path='/newentry'
-          render={() => <h1>New Entry Form</h1>}
+          render={() => <NewEntryForm/>}
         />
       </Switch>
     </div>
