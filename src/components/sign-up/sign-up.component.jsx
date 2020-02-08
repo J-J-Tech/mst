@@ -42,9 +42,16 @@ const SignUp = ({ toggleIsFlipped }) => {
                 state.password
             );
             await createUserProfileDocument(user);
+            // history.push('/');
         }
         catch (error) {
-            console.log(error.message)
+            if (error.code === 'auth/email-already-in-use') {
+                console.log('Email address is already being used');
+            }
+            else {
+                console.log('Unable to sign in');
+            }
+            // setHasError(true);
         }
     }
 

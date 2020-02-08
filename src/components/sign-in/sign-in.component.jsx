@@ -1,4 +1,7 @@
 import React, { useReducer } from 'react';
+
+import { auth } from '../../firebase/firebase.utils';
+
 import './sign-in.styles.css';
 
 const initialState = {
@@ -24,10 +27,26 @@ const SignIn = ({ toggleIsFlipped }) => {
         const { name, value } = e.target;
         dispatch({ type: `UPDATE_${name.toUpperCase()}`, value })
     }
+
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log("SignUp Form", state);
-    }
+
+        try {
+            await auth.signInWithEmailAndPassword(state.email, state.password);
+            // history.push('/');
+        } catch (error) {
+            if (error.code === 'auth/user-not-found') {
+                console.log('Email address not found');
+            }
+            else if (error.code === 'auth/wrong-password') {
+                console.log('Incorrect password');
+            }
+            else {
+                console.log('Unable to sign in');
+            }
+            // setHasError(true);
+        }
+    };
 
     return (
         <div>
