@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import './App.css';
 
 import SignInUpFlip from './components/sign-in-up-flip/sign-in-up-flip.component';
+import Navbar from './components/navbar/navbar.component';
 
 import { auth, createUserProfileDocument, firestore } from './firebase/firebase.utils';
 
@@ -26,10 +27,16 @@ const App = () => {
     });
   }, []);
 
+  const signUserOut = () => {
+    auth.signOut();
+    setUser(null);
+  };
+
   console.log("USER::", user)
 
   return (
     <div className="App">
+      <Navbar signUserOut={signUserOut} />
       <Switch>
         <Route exact path='/signin'
           render={() => <SignInUpFlip />}
