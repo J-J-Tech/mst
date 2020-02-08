@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
 import './sign-up.styles.css';
 import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
@@ -24,6 +25,7 @@ const reducer = (state, action) => {
 
 const SignUp = ({ toggleIsFlipped }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const history = useHistory();
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -42,7 +44,7 @@ const SignUp = ({ toggleIsFlipped }) => {
                 state.password
             );
             await createUserProfileDocument(user);
-            // history.push('/');
+            history.push('/newentry');
         }
         catch (error) {
             if (error.code === 'auth/email-already-in-use') {

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
+
 import './App.css';
 
 import SignInUpFlip from './components/sign-in-up-flip/sign-in-up-flip.component';
@@ -24,10 +26,18 @@ const App = () => {
     });
   }, []);
 
+  console.log("USER::", user)
 
   return (
     <div className="App">
-      <SignInUpFlip />
+      <Switch>
+        <Route exact path='/signin'
+          render={() => <SignInUpFlip />}
+        />
+        <Route exact path='/newentry'
+          render={() => <h1>New Entry Form</h1>}
+        />
+      </Switch>
     </div>
   );
 }

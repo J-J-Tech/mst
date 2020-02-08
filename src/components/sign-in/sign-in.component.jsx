@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { auth } from '../../firebase/firebase.utils';
 
@@ -22,6 +23,7 @@ const reducer = (state, action) => {
 
 const SignIn = ({ toggleIsFlipped }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const history = useHistory();
 
     const handleChange = e => {
         const { name, value } = e.target;
@@ -33,7 +35,7 @@ const SignIn = ({ toggleIsFlipped }) => {
 
         try {
             await auth.signInWithEmailAndPassword(state.email, state.password);
-            // history.push('/');
+            history.push('/newentry');
         } catch (error) {
             if (error.code === 'auth/user-not-found') {
                 console.log('Email address not found');
