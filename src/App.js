@@ -7,9 +7,11 @@ import './App.css';
 import SignInUpFlip from './components/sign-in-up-flip/sign-in-up-flip.component';
 import Navbar from './components/navbar/navbar.component';
 import Entries from './components/entries/entries.component';
+import Entry from './components/entry/entry.component';
 
 
 import { auth, createUserProfileDocument, firestore } from './firebase/firebase.utils';
+import MstContext from './context/mst.context';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -67,15 +69,24 @@ const App = () => {
 
   return (
     <div className="App">
+      <MstContext.Provider value={{user, entries, fetchEntries}}>
       <Navbar signUserOut={signUserOut} />
       <Switch>
         <Route exact path='/signin'
           render={() => <SignInUpFlip />}
         />
         <Route exact path='/entries'
-          render={() => <Entries entries={entries} />}
+          render={() => <Entries/>}
+        />
+        <Route exact path='/entry/:id'
+          render={(props) => {
+            console.log('ENTRY ROUTE', entries)
+            let entry = entries.find(entry => entry.id === props.match.params.id)
+          return <Entry entry={entry} />}
+          }
         />
       </Switch>
+      </MstContext.Provider>
     </div>
   );
 }
