@@ -6,6 +6,7 @@ import './App.css';
 
 import SignInUpFlip from './components/sign-in-up-flip/sign-in-up-flip.component';
 import Navbar from './components/navbar/navbar.component';
+import Entries from './components/entries/entries.component';
 
 
 import { auth, createUserProfileDocument, firestore } from './firebase/firebase.utils';
@@ -70,6 +71,9 @@ const App = () => {
       <Switch>
         <Route exact path='/signin'
           render={() => <SignInUpFlip />}
+        />
+        <Route exact path='/entries'
+          render={() => <Entries entries={entries} />}
         />
       </Switch>
     </div>
