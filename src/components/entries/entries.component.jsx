@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom'
 import './entries.styles.css';
+import MstContext from '../../context/mst.context';
 
-const Entries = ({ entries }) => {
-    console.log('entries comp', entries);
+const Entries = () => {
+    const { entries } = useContext(MstContext)
     return (
         <div>
             <h1>Entries</h1>
@@ -11,7 +13,10 @@ const Entries = ({ entries }) => {
                     !entries || !entries.length ? (
                         <p>You currently have no entries</p>
                     ) : (
-                            entries.map(entry => <p className="entry" key={entry.id}>{entry.date}</p>)
+
+                            entries.map(entry => (
+                                <Link key={entry.id} to={`entry/${entry.id}`} className="entry">{entry.date}</Link>)
+                            )
                         )
                 }
             </div>
