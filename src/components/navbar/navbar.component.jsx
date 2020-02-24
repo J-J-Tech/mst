@@ -7,11 +7,10 @@ const Navbar = ({ signUserOut }) => {
 
     return (
         <div className='navbar'>
-            <Link className='option' to='/entries'>Entries</Link>
-            <Link className='option'
-                to='/signin'
-                onClick={signUserOut}
-            >SIGN OUT</Link>
+            <ul className="nav nav-pills">
+                <li className="nav-item"><Link className='option' to='/entries'>Entries</Link></li>
+                <li className="nav-item"><Link className='option' to='/signin' onClick={signUserOut}>SIGN OUT</Link></li>
+            </ul>
 
         </div>
     )
