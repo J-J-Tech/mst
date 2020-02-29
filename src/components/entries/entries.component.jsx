@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
+import moment from 'moment';
 import './entries.styles.css';
 import MstContext from '../../context/mst.context';
 
@@ -15,7 +16,12 @@ const Entries = () => {
                     ) : (
 
                             entries.map(entry => (
-                                <Link key={entry.id} to={`entry/${entry.id}`} className="entry">{entry.date}</Link>)
+                                <div key={entry.id}>
+                                    <Link to={`entry/${entry.id}`} className="entry">{moment(entry.date).format("MMMM D, YYYY  h:mm a")}</Link>
+
+
+                                </div>
+                            )
                             )
                         )
                 }
