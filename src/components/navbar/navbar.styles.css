@@ -1,3 +1,13 @@
 .option {
     color: white;
 }
+
+.navBar {
+
+    background-color:black;
+    font-family: 'Shrikhand', cursive;
+    color: white;
+    font-size: large;
+    display: flex;
+
+}

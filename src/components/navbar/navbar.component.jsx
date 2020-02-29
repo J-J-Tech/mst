@@ -7,6 +7,7 @@ const Navbar = ({ signUserOut }) => {
 
     return (
         <div className='navbar'>
+
             <ul className="nav nav-pills">
                 <li className="nav-item"><Link className='option' to='/entries'>Entries</Link></li>
                 <li className="nav-item"><Link className='option' to='/signin' onClick={signUserOut}>SIGN OUT</Link></li>

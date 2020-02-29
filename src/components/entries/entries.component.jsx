@@ -17,6 +17,8 @@ const Entries = () => {
                             entries.map(entry => (
                                 <div key={entry.id}>
                                     <Link to={`entry/${entry.id}`} className="entry">{entry.date}</Link>
+
+
                                 </div>
                             )
                             )
