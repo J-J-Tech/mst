@@ -1,11 +1,12 @@
 import React from 'react';
+import moment from 'moment';
 import './entry.styles.css';
 
 const Entry = ({ entry }) => {
 
     return (
         <React.Fragment key={entry.id}>
-            <h1>{entry.date}</h1>
+            <h1>{moment(entry.date).format("MMMM D, YYYY")}</h1>
             <div>
                 <h4>Triggers</h4>
                 <hr />
