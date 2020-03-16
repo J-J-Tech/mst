@@ -6,6 +6,7 @@ import './App.css';
 
 import SignInUpFlip from './components/sign-in-up-flip/sign-in-up-flip.component';
 import Navbar from './components/navbar/navbar.component';
+import NewEntryForm from './components/new-entry-form/new-entry-form.component';
 import Entries from './components/entries/entries.component';
 import Entry from './components/entry/entry.component';
 
@@ -41,13 +42,13 @@ const App = () => {
         .orderBy("date", "desc")
         .get();
 
-        setEntries(snapshot.docs.map(doc => {
-          let data = doc.data()
-          return {...data, id: doc.id}
-        }));
+      setEntries(snapshot.docs.map(doc => {
+        let data = doc.data()
+        return { ...data, id: doc.id }
+      }));
     } catch (error) {
       console.log(error);
-    }    
+    }
   };
 
   // get entries
@@ -56,7 +57,7 @@ const App = () => {
       console.log("fetching")
       fetchEntries()
     }
-  }, [user]); 
+  }, [user]);
 
 
 
@@ -69,23 +70,27 @@ const App = () => {
 
   return (
     <div className="App">
-      <MstContext.Provider value={{user, entries, fetchEntries}}>
-      <Navbar signUserOut={signUserOut} />
-      <Switch>
-        <Route exact path='/signin'
-          render={() => <SignInUpFlip />}
-        />
-        <Route exact path='/entries'
-          render={() => <Entries/>}
-        />
-        <Route exact path='/entry/:id'
-          render={(props) => {
-            console.log('ENTRY ROUTE', entries)
-            let entry = entries.find(entry => entry.id === props.match.params.id)
-          return <Entry entry={entry} />}
-          }
-        />
-      </Switch>
+      <MstContext.Provider value={{ user, entries, fetchEntries }}>
+        <Navbar signUserOut={signUserOut} />
+        <Switch>
+          <Route exact path='/signin'
+            render={() => <SignInUpFlip />}
+          />
+          <Route exact path='/newentry'
+            render={() => <NewEntryForm />}
+          />
+          <Route exact path='/entries'
+            render={() => <Entries />}
+          />
+          <Route exact path='/entry/:id'
+            render={(props) => {
+              console.log('ENTRY ROUTE', entries)
+              let entry = entries.find(entry => entry.id === props.match.params.id)
+              return <Entry entry={entry} />
+            }
+            }
+          />
+        </Switch>
       </MstContext.Provider>
     </div>
   );
