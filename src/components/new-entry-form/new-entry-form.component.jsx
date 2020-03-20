@@ -72,6 +72,20 @@ const NewEntryForm = () => {
         <React.Fragment>
             <form className='new-entry-form' onSubmit={handleSubmit}>
                 <input type='datetime-local' />
+                {/* tab experiment */}
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                    <li className="nav-item">
+                        <a className="nav-link active" id="home-tab" data-toggle="tab" href="#symptoms" role="tab" aria-controls="symptoms" aria-selected="true">Symptoms</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" id="profile-tab" data-toggle="tab" href="#triggers" role="tab" aria-controls="triggers" aria-selected="false">Triggers</a>
+                    </li>
+                </ul>
+                <div className="tab-content" id="myTabContent">
+                    <div className="tab-pane fade show active" id="symptoms" role="tabpanel" aria-labelledby="symptoms-tab">...</div>
+                    <div className="tab-pane fade" id="triggers" role="tabpanel" aria-labelledby="triggers-tab">...</div>
+                </div>
+                {/* end tab exp. */}
                 <p>Symptoms</p>
                 <div>
                     {symptoms.map(symp => {
