@@ -63,7 +63,8 @@ const NewEntryForm = () => {
         console.log({
             symptoms: symptoms.filter(symp => symp.isChecked),
             triggers: triggers.filter(trig => trig.isChecked),
-            notes
+            notes,
+            userId: user.id
         });
     }
 
