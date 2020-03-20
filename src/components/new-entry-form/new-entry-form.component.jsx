@@ -33,18 +33,43 @@ const NewEntryForm = () => {
     }, [triggers]);
 
     const handleToggle = e => {
-        if (e.target.type === 'checkbox') {
-            console.log("CHECKBOX::", e.target.name, e.target.checked)
+        const category = e.target.name ? e.target.name.split('_')[0] : undefined;
+        const name = e.target.name ? e.target.name.split('_')[1] : undefined;
+        let updatedSymptoms;
+        let updatedTriggers;
+
+        if (category && category === 'symptom') {
+            updatedSymptoms = symptoms.map(symp =>
+                symp.name === name ? { ...symp, isChecked: !symp.isChecked } : symp
+            );
+            console.log(updatedSymptoms)
+            setSymptoms(updatedSymptoms);
+        }
+        if (category && category === 'trigger') {
+            updatedTriggers = triggers.map(trig =>
+                trig.name === name ? { ...trig, isChecked: !trig.isChecked } : trig
+            );
+            setTriggers(updatedTriggers);
         }
     }
 
     const handleChange = e => {
-        setNotes(e.target.value)
+        setNotes(e.target.value);
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        console.log("SUBMIT")
+        console.log({
+            symptoms: symptoms.filter(symp => symp.isChecked),
+            triggers: triggers.filter(trig => trig.isChecked),
+            notes
+        });
     }
 
     return (
         <React.Fragment>
-            <form className='new-entry-form'>
+            <form className='new-entry-form' onSubmit={handleSubmit}>
                 <input type='datetime-local' />
                 <p>Symptoms</p>
                 <div>
@@ -53,7 +78,7 @@ const NewEntryForm = () => {
                             key={symp.name}
                             onClick={handleToggle}
                         >
-                            <input id={symp.name} name={symp.name} type='checkbox' />
+                            <input id={symp.name} name={'symptom_' + symp.name} type='checkbox' />
                             <label htmlFor={symp.name}
                                 className={'symptom ' + (symp.isChecked && 'isSelected')}
                             >{symp.name}</label>
@@ -65,11 +90,12 @@ const NewEntryForm = () => {
                     {triggers.map(trig => {
                         return <div
                             key={trig.name}
-                            className={'trigger ' + (trig.isChecked && 'isSelected')}
                             onClick={handleToggle}
                         >
-                            <input id={trig.name} name={trig.name} type='checkbox' />
-                            <label htmlFor={trig.name}>{trig.name}</label>
+                            <input id={trig.name} name={'trigger_' + trig.name} type='checkbox' />
+                            <label htmlFor={trig.name}
+                                className={'trigger ' + (trig.isChecked && 'isSelected')}
+                            >{trig.name}</label>
                         </div>
                     })}
                 </div>
