@@ -72,7 +72,7 @@ const NewEntryForm = () => {
         <React.Fragment>
             <form className='new-entry-form' onSubmit={handleSubmit}>
                 <input type='datetime-local' />
-                {/* tab experiment */}
+                {/* Tabs */}
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
                         <a className="nav-link active" id="home-tab" data-toggle="tab" href="#symptoms" role="tab" aria-controls="symptoms" aria-selected="true">Symptoms</a>
@@ -82,38 +82,38 @@ const NewEntryForm = () => {
                     </li>
                 </ul>
                 <div className="tab-content" id="myTabContent">
-                    <div className="tab-pane fade show active" id="symptoms" role="tabpanel" aria-labelledby="symptoms-tab">...</div>
-                    <div className="tab-pane fade" id="triggers" role="tabpanel" aria-labelledby="triggers-tab">...</div>
-                </div>
-                {/* end tab exp. */}
-                <p>Symptoms</p>
-                <div>
-                    {symptoms.map(symp => {
-                        return <div
-                            key={symp.name}
-                            onClick={handleToggle}
-                        >
-                            <input id={symp.name} name={'symptom_' + symp.name} type='checkbox' />
-                            <label htmlFor={symp.name}
-                                className={'symptom ' + (symp.isChecked && 'isSelected')}
-                            >{symp.name}</label>
+                    <div className="tab-pane fade show active" id="symptoms" role="tabpanel" aria-labelledby="symptoms-tab">
+                        <div>
+                            {symptoms.map(symp => {
+                                return <div
+                                    key={symp.name}
+                                    onClick={handleToggle}
+                                >
+                                    <input id={symp.name} name={'symptom_' + symp.name} type='checkbox' />
+                                    <label htmlFor={symp.name}
+                                        className={'symptom ' + (symp.isChecked && 'isSelected')}
+                                    >{symp.name}</label>
+                                </div>
+                            })}
                         </div>
-                    })}
-                </div>
-                <p>Triggers</p>
-                <div>
-                    {triggers.map(trig => {
-                        return <div
-                            key={trig.name}
-                            onClick={handleToggle}
-                        >
-                            <input id={trig.name} name={'trigger_' + trig.name} type='checkbox' />
-                            <label htmlFor={trig.name}
-                                className={'trigger ' + (trig.isChecked && 'isSelected')}
-                            >{trig.name}</label>
+                    </div>
+                    <div className="tab-pane fade" id="triggers" role="tabpanel" aria-labelledby="triggers-tab">
+                        <div>
+                            {triggers.map(trig => {
+                                return <div
+                                    key={trig.name}
+                                    onClick={handleToggle}
+                                >
+                                    <input id={trig.name} name={'trigger_' + trig.name} type='checkbox' />
+                                    <label htmlFor={trig.name}
+                                        className={'trigger ' + (trig.isChecked && 'isSelected')}
+                                    >{trig.name}</label>
+                                </div>
+                            })}
                         </div>
-                    })}
+                    </div>
                 </div>
+                {/* End tabs */}
                 <textarea
                     className='new-entry-form__textarea'
                     name='notes'
