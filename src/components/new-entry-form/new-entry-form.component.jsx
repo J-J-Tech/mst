@@ -1,69 +1,84 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useReducer, useState, useEffect } from 'react';
 
 import MstContext from '../../context/mst.context';
 
 import './new-entry-form.styles.css';
 
-
-const NewEntryForm = () => {
-    const { user } = useContext(MstContext);
-    const [symptoms, setSymptoms] = useState([
+const initialState = {
+    date: new Date(),
+    symptoms: [
         { name: 'aura', isChecked: false },
         { name: 'nausea', isChecked: false },
         { name: 'headache', isChecked: false },
         { name: 'numbness', isChecked: false }
-    ]);
-    const [triggers, setTriggers] = useState([
+    ],
+    triggers: [
         { name: 'stress', isChecked: false },
         { name: 'lack of sleep', isChecked: false },
         { name: 'chocolate', isChecked: false },
         { name: 'stormy weather', isChecked: false }
-    ]);
+    ],
+    newSymptom: '',
+    newTrigger: '',
+    notes: ''
+};
 
-    const [newSymptom, setNewSymptom] = useState('');
-    const [newTrigger, setNewTrigger] = useState('');
-    const [notes, setNotes] = useState('');
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "UPDATE_DATE":
+            return { ...state, date: action.value };
 
-    useEffect(() => {
-        setNewSymptom('');
-    }, [symptoms]);
+        case "UPDATE_SYMPTOMS":
+            console.log(action.type, action.value)
+            const updatedSymptoms = state.symptoms.map(symp =>
+                symp.name === action.value ? { ...symp, isChecked: !symp.isChecked } : symp
+            );
+            return { ...state, symptoms: updatedSymptoms };
 
-    useEffect(() => {
-        setNewTrigger('');
-    }, [triggers]);
+        case "UPDATE_TRIGGERS":
+            const updatedTriggers = state.triggers.map(trig =>
+                trig.name === action.value ? { ...trig, isChecked: !trig.isChecked } : trig
+            );
+            return { ...state, triggers: updatedTriggers };
+
+        case "UPDATE_NEWSYMPTOM":
+            return { ...state, date: action.value };
+
+        case "UPDATE_NEWTRIGGER":
+            return { ...state, date: action.value };
+
+        case "UPDATE_NOTES":
+            return { ...state, notes: action.value };
+
+        default:
+            return state;
+    }
+};
+
+const NewEntryForm = () => {
+    const { user } = useContext(MstContext);
+    const [state, dispatch] = useReducer(reducer, initialState);
 
     const handleToggle = e => {
-        const category = e.target.name ? e.target.name.split('_')[0] : undefined;
-        const name = e.target.name ? e.target.name.split('_')[1] : undefined;
-        let updatedSymptoms;
-        let updatedTriggers;
-
-        if (category && category === 'symptom') {
-            updatedSymptoms = symptoms.map(symp =>
-                symp.name === name ? { ...symp, isChecked: !symp.isChecked } : symp
-            );
-            console.log(updatedSymptoms)
-            setSymptoms(updatedSymptoms);
-        }
-        if (category && category === 'trigger') {
-            updatedTriggers = triggers.map(trig =>
-                trig.name === name ? { ...trig, isChecked: !trig.isChecked } : trig
-            );
-            setTriggers(updatedTriggers);
+        if (e.target.type === 'checkbox') {
+            const category = e.target.name ? e.target.name.split('_')[0] : undefined;
+            const name = e.target.name ? e.target.name.split('_')[1] : undefined;
+            dispatch({ type: `UPDATE_${category.toUpperCase()}`, value: name })
         }
     }
 
     const handleChange = e => {
-        setNotes(e.target.value);
+        const { name, value } = e.target;
+        dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
 
     const handleSubmit = e => {
         e.preventDefault();
         console.log("SUBMIT")
         console.log({
-            symptoms: symptoms.filter(symp => symp.isChecked),
-            triggers: triggers.filter(trig => trig.isChecked),
-            notes,
+            ...state,
+            symptoms: state.symptoms.filter(symp => symp.isChecked),
+            triggers: state.triggers.filter(trig => trig.isChecked),
             userId: user.id
         });
     }
@@ -84,14 +99,14 @@ const NewEntryForm = () => {
                 <div className="tab-content" id="myTabContent">
                     <div className="tab-pane fade show active" id="symptoms" role="tabpanel" aria-labelledby="symptoms-tab">
                         <div>
-                            {symptoms.map(symp => {
+                            {state.symptoms.map(symp => {
                                 return <div
                                     key={symp.name}
                                     onClick={handleToggle}
                                 >
-                                    <input id={symp.name} name={'symptom_' + symp.name} type='checkbox' />
+                                    <input id={symp.name} name={'symptoms_' + symp.name} type='checkbox' />
                                     <label htmlFor={symp.name}
-                                        className={'symptom ' + (symp.isChecked && 'isSelected')}
+                                        className={'symptom ' + (symp.isChecked ? 'isSelected' : '')}
                                     >{symp.name}</label>
                                 </div>
                             })}
@@ -99,14 +114,14 @@ const NewEntryForm = () => {
                     </div>
                     <div className="tab-pane fade" id="triggers" role="tabpanel" aria-labelledby="triggers-tab">
                         <div>
-                            {triggers.map(trig => {
+                            {state.triggers.map(trig => {
                                 return <div
                                     key={trig.name}
                                     onClick={handleToggle}
                                 >
-                                    <input id={trig.name} name={'trigger_' + trig.name} type='checkbox' />
+                                    <input id={trig.name} name={'triggers_' + trig.name} type='checkbox' />
                                     <label htmlFor={trig.name}
-                                        className={'trigger ' + (trig.isChecked && 'isSelected')}
+                                        className={'trigger ' + (trig.isChecked ? 'isSelected' : '')}
                                     >{trig.name}</label>
                                 </div>
                             })}
@@ -117,7 +132,7 @@ const NewEntryForm = () => {
                 <textarea
                     className='new-entry-form__textarea'
                     name='notes'
-                    value={notes}
+                    value={state.notes}
                     placeholder='Enter notes here...'
                     onChange={handleChange}
                     rows='2'
