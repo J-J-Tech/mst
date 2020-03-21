@@ -73,7 +73,7 @@ const NewEntryForm = () => {
             <form className='new-entry-form' onSubmit={handleSubmit}>
                 <input type='datetime-local' />
                 {/* Tabs */}
-                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                <ul className="nav nav-tabs tabs-container" id="myTab" role="tablist">
                     <li className="nav-item">
                         <a className="nav-link active" id="home-tab" data-toggle="tab" href="#symptoms" role="tab" aria-controls="symptoms" aria-selected="true">Symptoms</a>
                     </li>
