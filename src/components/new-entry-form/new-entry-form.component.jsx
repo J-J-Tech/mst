@@ -101,7 +101,10 @@ const NewEntryForm = () => {
         e.preventDefault();
         console.log("SUBMIT")
         console.log({
-            ...state,
+            date: state.date,
+            symptoms: state.symptoms,
+            triggers: state.triggers,
+            notes: state.notes,
             userId: user.id
         });
     }
@@ -141,7 +144,10 @@ const NewEntryForm = () => {
                                     name='newSymptom'
                                     placeholder='Enter a new symptom'
                                     onChange={handleChange}
-                                    style={{ paddingRight: state.newSymptom ? 30 + 'px' : 10 + 'px' }}
+                                    style={{
+                                        paddingRight: state.newSymptom ? 30 + 'px' : 10 + 'px',
+                                        width: state.newSymptom ? 250 + 'px' : 200 + 'px'
+                                    }}
                                 />
                                 {
                                     state.newSymptom &&
@@ -180,7 +186,10 @@ const NewEntryForm = () => {
                                     name='newTrigger'
                                     placeholder='Enter a new trigger'
                                     onChange={handleChange}
-                                    style={{ paddingRight: state.newTrigger ? 30 + 'px' : 10 + 'px' }}
+                                    style={{
+                                        paddingRight: state.newTrigger ? 30 + 'px' : 10 + 'px',
+                                        width: state.newTrigger ? 250 + 'px' : 200 + 'px'
+                                    }}
                                 />
                                 {
                                     state.newTrigger &&
@@ -205,6 +214,9 @@ const NewEntryForm = () => {
                     placeholder='Enter notes here...'
                     onChange={handleChange}
                     rows='2'
+                    style={{
+                        width: state.notes ? 250 + 'px' : 200 + 'px'
+                    }}
                 >
 
                 </textarea>
