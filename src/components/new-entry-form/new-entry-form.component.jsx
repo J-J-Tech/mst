@@ -29,23 +29,38 @@ const reducer = (state, action) => {
             return { ...state, date: action.value };
 
         case "UPDATE_SYMPTOMS":
-            console.log(action.type, action.value)
-            const updatedSymptoms = state.symptoms.map(symp =>
-                symp.name === action.value ? { ...symp, isChecked: !symp.isChecked } : symp
-            );
-            return { ...state, symptoms: updatedSymptoms };
+            if (action.value === state.newSymptom) {
+                return {
+                    ...state,
+                    symptoms: [...state.symptoms, { name: action.value, isChecked: true }],
+                    newSymptom: ''
+                }
+            } else {
+                const updatedSymptoms = state.symptoms.map(symp =>
+                    symp.name === action.value ? { ...symp, isChecked: !symp.isChecked } : symp
+                );
+                return { ...state, symptoms: updatedSymptoms };
+            }
 
         case "UPDATE_TRIGGERS":
-            const updatedTriggers = state.triggers.map(trig =>
-                trig.name === action.value ? { ...trig, isChecked: !trig.isChecked } : trig
-            );
-            return { ...state, triggers: updatedTriggers };
+            if (action.value === state.newTrigger) {
+                return {
+                    ...state,
+                    triggers: [...state.triggers, { name: action.value, isChecked: true }],
+                    newTrigger: ''
+                }
+            } else {
+                const updatedTriggers = state.triggers.map(trig =>
+                    trig.name === action.value ? { ...trig, isChecked: !trig.isChecked } : trig
+                );
+                return { ...state, triggers: updatedTriggers };
+            }
 
         case "UPDATE_NEWSYMPTOM":
-            return { ...state, date: action.value };
+            return { ...state, newSymptom: action.value };
 
         case "UPDATE_NEWTRIGGER":
-            return { ...state, date: action.value };
+            return { ...state, newTrigger: action.value };
 
         case "UPDATE_NOTES":
             return { ...state, notes: action.value };
@@ -70,6 +85,16 @@ const NewEntryForm = () => {
     const handleChange = e => {
         const { name, value } = e.target;
         dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
+    }
+
+    const handleAddNew = e => {
+        if (e.target.id === 'newSymptom' && state.newSymptom) {
+            dispatch({ type: "UPDATE_SYMPTOMS", value: state.newSymptom });
+        }
+        if (e.target.id === 'newTrigger' && state.newTrigger) {
+            dispatch({ type: "UPDATE_TRIGGERS", value: state.newTrigger });
+        }
+
     }
 
     const handleSubmit = e => {
@@ -110,6 +135,19 @@ const NewEntryForm = () => {
                                     >{symp.name}</label>
                                 </div>
                             })}
+                            <input
+                                type='text'
+                                className='new-symptom'
+                                value={state.newSymptom}
+                                name='newSymptom'
+                                placeholder='Enter a new symptom'
+                                onChange={handleChange}
+                            />
+                            <span
+                                className='add-new'
+                                id='newSymptom'
+                                onClick={handleAddNew}
+                            >+</span>
                         </div>
                     </div>
                     <div className="tab-pane fade" id="triggers" role="tabpanel" aria-labelledby="triggers-tab">
@@ -125,6 +163,19 @@ const NewEntryForm = () => {
                                     >{trig.name}</label>
                                 </div>
                             })}
+                            <input
+                                type='text'
+                                className='new-trigger'
+                                value={state.newTrigger}
+                                name='newTrigger'
+                                placeholder='Enter a new trigger'
+                                onChange={handleChange}
+                            />
+                            <span
+                                className='add-new'
+                                id='newTrigger'
+                                onClick={handleAddNew}
+                            >+</span>
                         </div>
                     </div>
                 </div>
