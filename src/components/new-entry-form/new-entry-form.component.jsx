@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState, useEffect } from 'react';
+import React, { useContext, useReducer } from 'react';
 
 import MstContext from '../../context/mst.context';
 
@@ -88,13 +88,13 @@ const NewEntryForm = () => {
     }
 
     const handleAddNew = e => {
+        console.log(e.target.id)
         if (e.target.id === 'newSymptom' && state.newSymptom) {
             dispatch({ type: "UPDATE_SYMPTOMS", value: state.newSymptom });
         }
         if (e.target.id === 'newTrigger' && state.newTrigger) {
             dispatch({ type: "UPDATE_TRIGGERS", value: state.newTrigger });
         }
-
     }
 
     const handleSubmit = e => {
@@ -102,8 +102,6 @@ const NewEntryForm = () => {
         console.log("SUBMIT")
         console.log({
             ...state,
-            symptoms: state.symptoms.filter(symp => symp.isChecked),
-            triggers: state.triggers.filter(trig => trig.isChecked),
             userId: user.id
         });
     }
@@ -135,19 +133,30 @@ const NewEntryForm = () => {
                                     >{symp.name}</label>
                                 </div>
                             })}
-                            <input
-                                type='text'
-                                className='new-symptom'
-                                value={state.newSymptom}
-                                name='newSymptom'
-                                placeholder='Enter a new symptom'
-                                onChange={handleChange}
-                            />
-                            <span
-                                className='add-new'
-                                id='newSymptom'
-                                onClick={handleAddNew}
-                            >+</span>
+                            <div className='new-symptom-container'>
+                                <input
+                                    type='text'
+                                    className='new-symptom'
+                                    value={state.newSymptom}
+                                    name='newSymptom'
+                                    placeholder='Enter a new symptom'
+                                    onChange={handleChange}
+                                    style={{ paddingRight: state.newSymptom ? 30 + 'px' : 10 + 'px' }}
+                                />
+                                {
+                                    state.newSymptom &&
+                                    <span
+                                        className='add-new-btn'
+                                    >
+                                        {state.newSymptom && <i
+                                            className="fa fa-plus"
+                                            id='newSymptom'
+                                            onClick={handleAddNew}
+                                        ></i>}
+                                    </span>
+
+                                }
+                            </div>
                         </div>
                     </div>
                     <div className="tab-pane fade" id="triggers" role="tabpanel" aria-labelledby="triggers-tab">
@@ -163,19 +172,28 @@ const NewEntryForm = () => {
                                     >{trig.name}</label>
                                 </div>
                             })}
-                            <input
-                                type='text'
-                                className='new-trigger'
-                                value={state.newTrigger}
-                                name='newTrigger'
-                                placeholder='Enter a new trigger'
-                                onChange={handleChange}
-                            />
-                            <span
-                                className='add-new'
-                                id='newTrigger'
-                                onClick={handleAddNew}
-                            >+</span>
+                            <div className='new-trigger-container'>
+                                <input
+                                    type='text'
+                                    className='new-trigger'
+                                    value={state.newTrigger}
+                                    name='newTrigger'
+                                    placeholder='Enter a new trigger'
+                                    onChange={handleChange}
+                                    style={{ paddingRight: state.newTrigger ? 30 + 'px' : 10 + 'px' }}
+                                />
+                                {
+                                    state.newTrigger &&
+                                    <span
+                                        className='add-new-btn'
+                                    > <i
+                                        className="fa fa-plus"
+                                        id='newTrigger'
+                                        onClick={handleAddNew}
+                                    ></i>
+                                    </span>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
