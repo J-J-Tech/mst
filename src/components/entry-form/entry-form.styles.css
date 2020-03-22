@@ -1,5 +1,5 @@
 /* TABS */
-.tabs-container {
+.entry-form__tabs-container {
     margin-top: 20px;
 }
 
@@ -34,7 +34,7 @@
 }
 
 /* CHECKBOXES */
-.new-entry-form input[type=checkbox] {
+.entry-form input[type=checkbox] {
     display: none;
 }
 
@@ -54,6 +54,7 @@
     color: white;
     border-radius: 24px;
     transition: 0.25s;
+    transition-delay: 0.1s;
 }
 
 .isSelected {
@@ -76,12 +77,7 @@
     outline: 0;
 }
 
-.new-symptom:focus .add-new-btn,
-.new-trigger:focus .add-new-btn {
-    display: inline;
-}
-
-.add-new-btn {
+.entry-form__add-new-btn {
     position: absolute;
     color: #418f61;
     height: 40px;
@@ -93,11 +89,20 @@
     margin: 32px 20px 20px 104px;
 }
 
-.add-new-btn:focus {
+/* .new-symptom:focus .entry-form__add-new-btn,
+.new-trigger:focus .entry-form__add-new-btn {
+    display: inline-block;
+} */
+
+.entry-form__add-new-btn:focus {
     outline: 0;
 }
 
-.new-entry-form textarea {
+.entry-form__plus {
+    cursor: pointer;
+}
+
+.entry-form__textarea {
     background: none;
     color: white;
     width: 200px;
@@ -111,13 +116,13 @@
     -ms-user-select: text;
     user-select: text;
 }
-.new-entry-form textarea:focus {
+.entry-form__textarea:focus {
     width: 250px;
     border-color: #418f61;
     outline: none;
 }
 
-.new-entry-form input[type=submit] {
+.entry-form input[type=submit] {
     border: 0;
     background: none;
     display: block;
@@ -132,6 +137,6 @@
     cursor: pointer;
 }
 
-.new-entry-form input[type = "submit"]:hover {
+.entry-form input[type = "submit"]:hover {
     background-color: #418f61;
 }

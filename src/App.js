@@ -6,7 +6,7 @@ import './App.css';
 
 import SignInUpFlip from './components/sign-in-up-flip/sign-in-up-flip.component';
 import Navbar from './components/navbar/navbar.component';
-import NewEntryForm from './components/new-entry-form/new-entry-form.component';
+import NewEntryForm from './components/entry-form/new-entry-form.component';
 import Entries from './components/entries/entries.component';
 import Entry from './components/entry/entry.component';
 

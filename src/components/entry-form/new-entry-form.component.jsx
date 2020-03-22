@@ -1,8 +1,8 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useState, useEffect } from 'react';
 
 import MstContext from '../../context/mst.context';
 
-import './new-entry-form.styles.css';
+import './entry-form.styles.css';
 
 const initialState = {
     date: new Date(),
@@ -73,12 +73,17 @@ const reducer = (state, action) => {
 const NewEntryForm = () => {
     const { user } = useContext(MstContext);
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [showPlus, setShowPlus] = useState(true);
+
+    useEffect(() => {
+        state.newSymptom || state.newTrigger ? setShowPlus(true) : setShowPlus(false)
+    }, [state])
 
     const handleToggle = e => {
         if (e.target.type === 'checkbox') {
             const category = e.target.name ? e.target.name.split('_')[0] : undefined;
             const name = e.target.name ? e.target.name.split('_')[1] : undefined;
-            dispatch({ type: `UPDATE_${category.toUpperCase()}`, value: name })
+            dispatch({ type: `UPDATE_${category.toUpperCase()}`, value: name });
         }
     }
 
@@ -88,13 +93,21 @@ const NewEntryForm = () => {
     }
 
     const handleAddNew = e => {
-        console.log(e.target.id)
         if (e.target.id === 'newSymptom' && state.newSymptom) {
             dispatch({ type: "UPDATE_SYMPTOMS", value: state.newSymptom });
         }
         if (e.target.id === 'newTrigger' && state.newTrigger) {
             dispatch({ type: "UPDATE_TRIGGERS", value: state.newTrigger });
         }
+    }
+
+    // Clear new-symptom / new-trigger input onBlur -- 200ms delay to allow for handleAddNew
+    const handleOnBlur = e => {
+        setTimeout(function () {
+            dispatch({ type: "UPDATE_NEWSYMPTOM", value: '' });
+            dispatch({ type: "UPDATE_NEWTRIGGER", value: '' });
+            setShowPlus(false);
+        }, 100);
     }
 
     const handleSubmit = e => {
@@ -111,10 +124,10 @@ const NewEntryForm = () => {
 
     return (
         <React.Fragment>
-            <form className='new-entry-form' onSubmit={handleSubmit}>
+            <form className='entry-form' onSubmit={handleSubmit}>
                 <input type='datetime-local' />
                 {/* Tabs */}
-                <ul className="nav nav-tabs tabs-container" id="myTab" role="tablist">
+                <ul className="nav nav-tabs entry-form__tabs-container" id="myTab" role="tablist">
                     <li className="nav-item">
                         <a className="nav-link active" id="home-tab" data-toggle="tab" href="#symptoms" role="tab" aria-controls="symptoms" aria-selected="true">Symptoms</a>
                     </li>
@@ -144,18 +157,18 @@ const NewEntryForm = () => {
                                     name='newSymptom'
                                     placeholder='Enter a new symptom'
                                     onChange={handleChange}
+                                    onBlur={handleOnBlur}
                                     style={{
-                                        paddingRight: state.newSymptom ? 30 + 'px' : 10 + 'px',
-                                        width: state.newSymptom ? 250 + 'px' : 200 + 'px'
+                                        paddingRight: state.newSymptom ? 30 + 'px' : 10 + 'px'
                                     }}
                                 />
                                 {
-                                    state.newSymptom &&
+                                    showPlus &&
                                     <span
-                                        className='add-new-btn'
+                                        className='entry-form__add-new-btn'
                                     >
-                                        {state.newSymptom && <i
-                                            className="fa fa-plus"
+                                        {showPlus && <i
+                                            className="fa fa-plus entry-form__plus"
                                             id='newSymptom'
                                             onClick={handleAddNew}
                                         ></i>}
@@ -186,15 +199,15 @@ const NewEntryForm = () => {
                                     name='newTrigger'
                                     placeholder='Enter a new trigger'
                                     onChange={handleChange}
+                                    onBlur={handleOnBlur}
                                     style={{
-                                        paddingRight: state.newTrigger ? 30 + 'px' : 10 + 'px',
-                                        width: state.newTrigger ? 250 + 'px' : 200 + 'px'
+                                        paddingRight: state.newTrigger ? 30 + 'px' : 10 + 'px'
                                     }}
                                 />
                                 {
-                                    state.newTrigger &&
+                                    showPlus &&
                                     <span
-                                        className='add-new-btn'
+                                        className='entry-form__add-new-btn'
                                     > <i
                                         className="fa fa-plus"
                                         id='newTrigger'
@@ -208,15 +221,12 @@ const NewEntryForm = () => {
                 </div>
                 {/* End tabs */}
                 <textarea
-                    className='new-entry-form__textarea'
+                    className='entry-form__textarea'
                     name='notes'
                     value={state.notes}
                     placeholder='Enter notes here...'
                     onChange={handleChange}
                     rows='2'
-                    style={{
-                        width: state.notes ? 250 + 'px' : 200 + 'px'
-                    }}
                 >
 
                 </textarea>
