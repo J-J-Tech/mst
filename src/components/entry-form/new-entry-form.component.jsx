@@ -39,7 +39,7 @@ const reducer = (state, action) => {
                 const updatedSymptoms = state.symptoms.map(symp =>
                     symp.name === action.value ? { ...symp, isChecked: !symp.isChecked } : symp
                 );
-                return { ...state, symptoms: updatedSymptoms };
+                return { ...state, symptoms: updatedSymptoms, newSymptom: '' };
             }
 
         case "UPDATE_TRIGGERS":
@@ -53,7 +53,7 @@ const reducer = (state, action) => {
                 const updatedTriggers = state.triggers.map(trig =>
                     trig.name === action.value ? { ...trig, isChecked: !trig.isChecked } : trig
                 );
-                return { ...state, triggers: updatedTriggers };
+                return { ...state, triggers: updatedTriggers, newTrigger: '' };
             }
 
         case "UPDATE_NEWSYMPTOM":
@@ -81,6 +81,7 @@ const NewEntryForm = () => {
 
     const handleToggle = e => {
         if (e.target.type === 'checkbox') {
+            setShowPlus(false);
             const category = e.target.name ? e.target.name.split('_')[0] : undefined;
             const name = e.target.name ? e.target.name.split('_')[1] : undefined;
             dispatch({ type: `UPDATE_${category.toUpperCase()}`, value: name });
@@ -101,13 +102,10 @@ const NewEntryForm = () => {
         }
     }
 
-    // Clear new-symptom / new-trigger input onBlur -- 200ms delay to allow for handleAddNew
+    // Clear new-symptom / new-trigger input onBlur 
     const handleOnBlur = e => {
-        setTimeout(function () {
-            dispatch({ type: "UPDATE_NEWSYMPTOM", value: '' });
-            dispatch({ type: "UPDATE_NEWTRIGGER", value: '' });
-            setShowPlus(false);
-        }, 100);
+        dispatch({ type: "UPDATE_NEWSYMPTOM", value: '' });
+        dispatch({ type: "UPDATE_NEWTRIGGER", value: '' });
     }
 
     const handleSubmit = e => {
@@ -163,14 +161,15 @@ const NewEntryForm = () => {
                                     }}
                                 />
                                 {
-                                    showPlus &&
+                                    // showPlus &&
+                                    state.newSymptom &&
                                     <span
                                         className='entry-form__add-new-btn'
                                     >
                                         {showPlus && <i
                                             className="fa fa-plus entry-form__plus"
                                             id='newSymptom'
-                                            onClick={handleAddNew}
+                                            onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
                                         ></i>}
                                     </span>
 
@@ -211,7 +210,7 @@ const NewEntryForm = () => {
                                     > <i
                                         className="fa fa-plus"
                                         id='newTrigger'
-                                        onClick={handleAddNew}
+                                        onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
                                     ></i>
                                     </span>
                                 }
