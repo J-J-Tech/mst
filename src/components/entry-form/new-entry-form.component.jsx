@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState, useEffect } from 'react';
+import React, { useContext, useReducer } from 'react';
 
 import MstContext from '../../context/mst.context';
 
@@ -73,15 +73,9 @@ const reducer = (state, action) => {
 const NewEntryForm = () => {
     const { user } = useContext(MstContext);
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [showPlus, setShowPlus] = useState(true);
-
-    useEffect(() => {
-        state.newSymptom || state.newTrigger ? setShowPlus(true) : setShowPlus(false)
-    }, [state])
 
     const handleToggle = e => {
         if (e.target.type === 'checkbox') {
-            setShowPlus(false);
             const category = e.target.name ? e.target.name.split('_')[0] : undefined;
             const name = e.target.name ? e.target.name.split('_')[1] : undefined;
             dispatch({ type: `UPDATE_${category.toUpperCase()}`, value: name });
@@ -161,16 +155,15 @@ const NewEntryForm = () => {
                                     }}
                                 />
                                 {
-                                    // showPlus &&
                                     state.newSymptom &&
                                     <span
                                         className='entry-form__add-new-btn'
                                     >
-                                        {showPlus && <i
+                                        <i
                                             className="fa fa-plus entry-form__plus"
                                             id='newSymptom'
                                             onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
-                                        ></i>}
+                                        ></i>
                                     </span>
 
                                 }
@@ -204,14 +197,15 @@ const NewEntryForm = () => {
                                     }}
                                 />
                                 {
-                                    showPlus &&
+                                    state.newTrigger &&
                                     <span
                                         className='entry-form__add-new-btn'
-                                    > <i
-                                        className="fa fa-plus"
-                                        id='newTrigger'
-                                        onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
-                                    ></i>
+                                    >
+                                        <i
+                                            className="fa fa-plus entry-form__plus"
+                                            id='newTrigger'
+                                            onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
+                                        ></i>
                                     </span>
                                 }
                             </div>
@@ -231,7 +225,6 @@ const NewEntryForm = () => {
                 </textarea>
                 <input type='submit' value='SAVE ENTRY' />
             </form>
-
         </React.Fragment>
     )
 };
