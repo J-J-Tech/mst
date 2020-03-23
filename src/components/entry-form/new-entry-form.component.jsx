@@ -1,7 +1,9 @@
 import React, { useContext, useReducer } from 'react';
 
 import MstContext from '../../context/mst.context';
+import DatePicker from 'react-datepicker';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import './entry-form.styles.css';
 
 const initialState = {
@@ -82,12 +84,17 @@ const NewEntryForm = () => {
         }
     }
 
+    const handleDateChange = (date) => {
+        dispatch({ type: 'UPDATE_DATE', value: date });
+    }
+
     const handleChange = e => {
         const { name, value } = e.target;
         dispatch({ type: `UPDATE_${name.toUpperCase()}`, value });
     }
 
     const handleAddNew = e => {
+        console.log(e)
         if (e.target.id === 'newSymptom' && state.newSymptom) {
             dispatch({ type: "UPDATE_SYMPTOMS", value: state.newSymptom });
         }
@@ -117,7 +124,13 @@ const NewEntryForm = () => {
     return (
         <React.Fragment>
             <form className='entry-form' onSubmit={handleSubmit}>
-                <input type='datetime-local' />
+                <DatePicker
+                    selected={state.date}
+                    onChange={date => handleDateChange(date)}
+                    timeInputLabel=""
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    showTimeInput
+                />
                 {/* Tabs */}
                 <ul className="nav nav-tabs entry-form__tabs-container" id="myTab" role="tablist">
                     <li className="nav-item">
