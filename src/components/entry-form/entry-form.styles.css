@@ -1,13 +1,38 @@
 /* DATE PICKER */
-.react-datepicker__input-container input[type='text'] {
+.react-datepicker {
+    background-color: rgb(228, 228, 228);
+}
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before {
+    border-bottom-color: rgb(228, 228, 228);
+}
+
+.react-datepicker__header {
+    background-color: rgb(228, 228, 228);
+}
+
+.react-datepicker__day--selected {
+    background-color: #388bc2;
+}
+
+.react-datepicker__input-container input[type="text"] {
     color: white;
-    background: transparent;
+    background-color: transparent;
+    border: none;
+    margin: 0 25px 0 45px;
+}
+.react-datepicker__input-container input[type="text"] {
+    color: rgb(228, 228, 228);
+    outline: 0;
+}
+
+.react-datepicker-time__input {
+    background: rgb(228, 228, 228);
     text-align: center;
     border: 0;
     margin: 0;
 }
-.react-datepicker__input-container input[type='text']:focus {
-    color: rgb(107, 107, 107);
+.react-datepicker-time__input:focus {
     outline: 0;
 }
 
