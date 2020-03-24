@@ -6,6 +6,7 @@ import MstContext from '../../context/mst.context';
 
 const Entries = () => {
     const { entries } = useContext(MstContext)
+    console.log(entries)
     return (
         <div>
             <h1>Entries</h1>
@@ -18,7 +19,6 @@ const Entries = () => {
                             entries.map(entry => (
                                 <div key={entry.id}>
                                     <Link to={`entry/${entry.id}`} className="entry">{moment(entry.date).format("MMMM D, YYYY  h:mm a")}</Link>
-
 
                                 </div>
                             )

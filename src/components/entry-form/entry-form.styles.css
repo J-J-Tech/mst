@@ -1,0 +1,194 @@
+/* DATE PICKER */
+.react-datepicker {
+    background-color: rgb(228, 228, 228);
+}
+
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before {
+    border-bottom-color: rgb(228, 228, 228);
+}
+
+.react-datepicker__header {
+    background-color: rgb(228, 228, 228);
+}
+
+.react-datepicker__day--selected {
+    background-color: #388bc2;
+}
+
+.react-datepicker__input-container input[type="text"] {
+    color: white;
+    background-color: transparent;
+    border: none;
+    margin: 0 25px 0 45px;
+}
+.react-datepicker__input-container input[type="text"] {
+    color: rgb(228, 228, 228);
+    outline: 0;
+}
+
+.react-datepicker-time__input {
+    background: rgb(228, 228, 228);
+    text-align: center;
+    border: 0;
+    margin: 0;
+}
+.react-datepicker-time__input:focus {
+    outline: 0;
+}
+
+.react-datepicker__input-time-container {
+    margin: 0 0 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.react-datepicker-time__input {
+    border: none;
+}
+.react-datepicker-time__input:hover {
+    cursor: pointer;
+}
+.react-datepicker-time__input:focus {
+    outline: 0;
+    background-color: transparent;
+}
+
+/* TABS */
+.entry-form__tabs-container {
+    margin-top: 5px auto;
+}
+
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    border: 0;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: white;
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+} 
+
+.nav-tabs .nav-link {
+    border: 1px solid transparent;
+    color: grey;
+    outline: 0;
+}
+
+.nav-tabs .nav-link:hover {
+    border: none;
+    outline: 0;
+}
+
+.nav-tabs a{
+    text-decoration: none;
+    color: #333;
+    outline: 0;
+}
+
+/* CHECKBOXES */
+.entry-form input[type=checkbox] {
+    display: none;
+}
+
+.symptom,
+.trigger,
+.new-symptom,
+.new-trigger {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 5px auto 20px auto;
+    text-align: center;
+    border: 2px solid #388bc2;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    transition-delay: 0.1s;
+}
+
+.isSelected {
+    background-color: #388bc2;
+}
+
+.new-symptom-container,
+.new-trigger-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: -5px auto 0 auto;
+    padding: 0 auto;
+}
+
+.new-symptom:focus,
+.new-trigger:focus {
+    width: 250px;
+    border-color: #418f61;
+    outline: 0;
+}
+
+.entry-form__add-new-btn {
+    position: absolute;
+    color: #418f61;
+    height: 40px;
+    width: 40px;
+    background-color: transparent;
+    border-color: transparent;
+    border-radius: 24px;
+    padding: 5px 14px;
+    margin: 32px 20px 20px 104px;
+}
+
+.entry-form__add-new-btn:focus {
+    outline: 0;
+}
+
+.entry-form__plus {
+    cursor: pointer;
+}
+
+.entry-form__textarea {
+    background: none;
+    color: white;
+    width: 200px;
+    padding: 10px;
+    margin: 0 auto;
+    transition: 0.25s;
+    border: 2px solid #388bc2;
+    border-radius: 10px;
+    resize: none;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+.entry-form__textarea:focus {
+    width: 250px;
+    border-color: #418f61;
+    outline: none;
+}
+
+.entry-form input[type=submit] {
+    border: 0;
+    background: none;
+    display: block;
+    margin: 14px auto;
+    text-align: center;
+    border: 2px solid #418f61;
+    padding: 20px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.entry-form input[type = "submit"]:hover {
+    background-color: #418f61;
+}

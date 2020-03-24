@@ -1,13 +1,24 @@
-.option {
-    color: white;
-}
-
-.navBar {
-
-    background-color:black;
-    font-family: 'Shrikhand', cursive;
+.navbar {
+    background-color: transparent;
     color: white;
     font-size: large;
     display: flex;
+    justify-content: flex-end;
+}
 
+.links-container {
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: .5px solid grey;
+}
+
+.option {
+    color: white;
+}
+.option:hover {
+    color: #418f61;
+    text-decoration: none;
 }
