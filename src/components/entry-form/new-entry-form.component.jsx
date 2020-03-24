@@ -1,7 +1,10 @@
 import React, { useContext, useReducer } from 'react';
+import { useHistory } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 import MstContext from '../../context/mst.context';
-import DatePicker from 'react-datepicker';
+import { firestore } from '../../firebase/firebase.utils';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import './entry-form.styles.css';
@@ -73,8 +76,9 @@ const reducer = (state, action) => {
 };
 
 const NewEntryForm = () => {
-    const { user } = useContext(MstContext);
+    const { user, fetchEntries } = useContext(MstContext);
     const [state, dispatch] = useReducer(reducer, initialState);
+    const history = useHistory();
 
     const handleToggle = e => {
         if (e.target.type === 'checkbox') {
@@ -109,16 +113,23 @@ const NewEntryForm = () => {
         dispatch({ type: "UPDATE_NEWTRIGGER", value: '' });
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("SUBMIT")
-        console.log({
-            date: state.date,
-            symptoms: state.symptoms,
-            triggers: state.triggers,
-            notes: state.notes,
-            userId: user.id
-        });
+        try {
+            await firestore.collection('entries')
+                .add({
+                    date: moment(state.date).format(),
+                    symptoms: state.symptoms,
+                    triggers: state.triggers,
+                    notes: state.notes,
+                    userId: user.id
+                })
+            fetchEntries();
+            history.push('/entries');
+        } catch (error) {
+            alert("Unable to save entry");
+        }
     }
 
     return (
