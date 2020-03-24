@@ -11,6 +11,24 @@
     outline: 0;
 }
 
+.react-datepicker__input-time-container {
+    margin: 0 0 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.react-datepicker-time__input {
+    border: none;
+}
+.react-datepicker-time__input:hover {
+    cursor: pointer;
+}
+.react-datepicker-time__input:focus {
+    outline: 0;
+    background-color: transparent;
+}
+
 /* TABS */
 .entry-form__tabs-container {
     margin-top: 5px auto;
