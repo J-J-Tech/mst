@@ -113,6 +113,11 @@
     transition-delay: 0.1s;
 }
 
+.symptom:hover,
+.trigger:hover {
+    cursor: pointer;
+}
+
 .isSelected {
     background-color: #388bc2;
 }

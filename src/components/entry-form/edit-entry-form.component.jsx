@@ -66,7 +66,7 @@ const EditEntryForm = () => {
 
     const [state, dispatch] = useReducer(reducer, {
         // date: moment(editEntry.date).format("MMMM d, yyyy h:mm aa"),
-        date: new Date(), // <-- FIX DATE BUG !!!!!!! **********************
+        date: new Date(editEntry.date), // <-- FIX DATE BUG !!!!!!! **********************
         symptoms: editEntry.symptoms,
         triggers: editEntry.triggers,
         newSymptom: '',
