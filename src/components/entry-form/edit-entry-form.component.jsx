@@ -65,8 +65,7 @@ const EditEntryForm = () => {
     const editEntry = entries.find(entry => entry.id === params.id);
 
     const [state, dispatch] = useReducer(reducer, {
-        // date: moment(editEntry.date).format("MMMM d, yyyy h:mm aa"),
-        date: new Date(editEntry.date), // <-- FIX DATE BUG !!!!!!! **********************
+        date: new Date(editEntry.date),
         symptoms: editEntry.symptoms,
         triggers: editEntry.triggers,
         newSymptom: '',
@@ -129,125 +128,123 @@ const EditEntryForm = () => {
     }
 
     return (
-        editEntry ?
-            <React.Fragment>
-                <form className='entry-form' onSubmit={handleSubmit}>
-                    <DatePicker
-                        selected={state.date}
-                        onChange={date => handleDateChange(date)}
-                        timeInputLabel=""
-                        dateFormat="MM/dd/yyyy h:mm aa"
-                        showTimeInput
-                    />
-                    {/* Tabs */}
-                    <ul className="nav nav-tabs entry-form__tabs-container" id="myTab" role="tablist">
-                        <li className="nav-item">
-                            <a className="nav-link active" id="home-tab" data-toggle="tab" href="#symptoms" role="tab" aria-controls="symptoms" aria-selected="true">Symptoms</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" id="profile-tab" data-toggle="tab" href="#triggers" role="tab" aria-controls="triggers" aria-selected="false">Triggers</a>
-                        </li>
-                    </ul>
-                    <div className="tab-content" id="myTabContent">
-                        <div className="tab-pane fade show active" id="symptoms" role="tabpanel" aria-labelledby="symptoms-tab">
-                            <div>
-                                {state.symptoms.map(symp => {
-                                    return <div
-                                        key={symp.name}
-                                        onClick={handleToggle}
+        <React.Fragment>
+            <form className='entry-form' onSubmit={handleSubmit}>
+                <DatePicker
+                    selected={state.date}
+                    onChange={date => handleDateChange(date)}
+                    timeInputLabel=""
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    showTimeInput
+                />
+                {/* Tabs */}
+                <ul className="nav nav-tabs entry-form__tabs-container" id="myTab" role="tablist">
+                    <li className="nav-item">
+                        <a className="nav-link active" id="home-tab" data-toggle="tab" href="#symptoms" role="tab" aria-controls="symptoms" aria-selected="true">Symptoms</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className="nav-link" id="profile-tab" data-toggle="tab" href="#triggers" role="tab" aria-controls="triggers" aria-selected="false">Triggers</a>
+                    </li>
+                </ul>
+                <div className="tab-content" id="myTabContent">
+                    <div className="tab-pane fade show active" id="symptoms" role="tabpanel" aria-labelledby="symptoms-tab">
+                        <div>
+                            {state.symptoms.map(symp => {
+                                return <div
+                                    key={symp.name}
+                                    onClick={handleToggle}
+                                >
+                                    <input id={symp.name} name={'symptoms_' + symp.name} type='checkbox' />
+                                    <label htmlFor={symp.name}
+                                        className={'symptom ' + (symp.isChecked ? 'isSelected' : '')}
+                                    >{symp.name}</label>
+                                </div>
+                            })}
+                            <div className='new-symptom-container'>
+                                <input
+                                    type='text'
+                                    className='new-symptom'
+                                    value={state.newSymptom}
+                                    name='newSymptom'
+                                    placeholder='Enter a new symptom'
+                                    onChange={handleChange}
+                                    onBlur={handleOnBlur}
+                                    style={{
+                                        paddingRight: state.newSymptom ? 30 + 'px' : 10 + 'px'
+                                    }}
+                                />
+                                {
+                                    state.newSymptom &&
+                                    <span
+                                        className='entry-form__add-new-btn'
                                     >
-                                        <input id={symp.name} name={'symptoms_' + symp.name} type='checkbox' />
-                                        <label htmlFor={symp.name}
-                                            className={'symptom ' + (symp.isChecked ? 'isSelected' : '')}
-                                        >{symp.name}</label>
-                                    </div>
-                                })}
-                                <div className='new-symptom-container'>
-                                    <input
-                                        type='text'
-                                        className='new-symptom'
-                                        value={state.newSymptom}
-                                        name='newSymptom'
-                                        placeholder='Enter a new symptom'
-                                        onChange={handleChange}
-                                        onBlur={handleOnBlur}
-                                        style={{
-                                            paddingRight: state.newSymptom ? 30 + 'px' : 10 + 'px'
-                                        }}
-                                    />
-                                    {
-                                        state.newSymptom &&
-                                        <span
-                                            className='entry-form__add-new-btn'
-                                        >
-                                            <i
-                                                className="fa fa-plus entry-form__plus"
-                                                id='newSymptom'
-                                                onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
-                                            ></i>
-                                        </span>
+                                        <i
+                                            className="fa fa-plus entry-form__plus"
+                                            id='newSymptom'
+                                            onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
+                                        ></i>
+                                    </span>
 
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div className="tab-pane fade" id="triggers" role="tabpanel" aria-labelledby="triggers-tab">
-                            <div>
-                                {state.triggers.map(trig => {
-                                    return <div
-                                        key={trig.name}
-                                        onClick={handleToggle}
-                                    >
-                                        <input id={trig.name} name={'triggers_' + trig.name} type='checkbox' />
-                                        <label htmlFor={trig.name}
-                                            className={'trigger ' + (trig.isChecked ? 'isSelected' : '')}
-                                        >{trig.name}</label>
-                                    </div>
-                                })}
-                                <div className='new-trigger-container'>
-                                    <input
-                                        type='text'
-                                        className='new-trigger'
-                                        value={state.newTrigger}
-                                        name='newTrigger'
-                                        placeholder='Enter a new trigger'
-                                        onChange={handleChange}
-                                        onBlur={handleOnBlur}
-                                        style={{
-                                            paddingRight: state.newTrigger ? 30 + 'px' : 10 + 'px'
-                                        }}
-                                    />
-                                    {
-                                        state.newTrigger &&
-                                        <span
-                                            className='entry-form__add-new-btn'
-                                        >
-                                            <i
-                                                className="fa fa-plus entry-form__plus"
-                                                id='newTrigger'
-                                                onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
-                                            ></i>
-                                        </span>
-                                    }
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>
-                    {/* End tabs */}
-                    <textarea
-                        className='entry-form__textarea'
-                        name='notes'
-                        value={state.notes}
-                        placeholder='Enter notes here...'
-                        onChange={handleChange}
-                        rows='2'
-                    >
+                    <div className="tab-pane fade" id="triggers" role="tabpanel" aria-labelledby="triggers-tab">
+                        <div>
+                            {state.triggers.map(trig => {
+                                return <div
+                                    key={trig.name}
+                                    onClick={handleToggle}
+                                >
+                                    <input id={trig.name} name={'triggers_' + trig.name} type='checkbox' />
+                                    <label htmlFor={trig.name}
+                                        className={'trigger ' + (trig.isChecked ? 'isSelected' : '')}
+                                    >{trig.name}</label>
+                                </div>
+                            })}
+                            <div className='new-trigger-container'>
+                                <input
+                                    type='text'
+                                    className='new-trigger'
+                                    value={state.newTrigger}
+                                    name='newTrigger'
+                                    placeholder='Enter a new trigger'
+                                    onChange={handleChange}
+                                    onBlur={handleOnBlur}
+                                    style={{
+                                        paddingRight: state.newTrigger ? 30 + 'px' : 10 + 'px'
+                                    }}
+                                />
+                                {
+                                    state.newTrigger &&
+                                    <span
+                                        className='entry-form__add-new-btn'
+                                    >
+                                        <i
+                                            className="fa fa-plus entry-form__plus"
+                                            id='newTrigger'
+                                            onMouseDown={handleAddNew} // onMouseDown to execute before onBlur
+                                        ></i>
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* End tabs */}
+                <textarea
+                    className='entry-form__textarea'
+                    name='notes'
+                    value={state.notes}
+                    placeholder='Enter notes here...'
+                    onChange={handleChange}
+                    rows='2'
+                >
 
-                    </textarea>
-                    <input type='submit' value='UPDATE ENTRY' />
-                </form>
-            </React.Fragment>
-            : null
+                </textarea>
+                <input type='submit' value='UPDATE ENTRY' />
+            </form>
+        </React.Fragment>
     )
 };
 
