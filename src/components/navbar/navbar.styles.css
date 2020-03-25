@@ -1,6 +1,6 @@
 .navbar {
     background-color: transparent;
-    color: white;
+    /* color: gray; */
     font-size: large;
     display: flex;
     justify-content: flex-end;
@@ -16,9 +16,9 @@
 }
 
 .option {
-    color: white;
+    color: gray;
 }
 .option:hover {
-    color: #418f61;
+    color: white;
     text-decoration: none;
 }
