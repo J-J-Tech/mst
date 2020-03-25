@@ -1,10 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import './entry.styles.css';
 
 const Entry = ({ entry }) => {
+    const history = useHistory();
+
     const handleClick = e => {
-        console.log("TO BE EDITED")
+        history.push(`/edit/${entry.id}`);
     }
 
     return (

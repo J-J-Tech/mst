@@ -7,6 +7,7 @@ import './App.css';
 import SignInUpFlip from './components/sign-in-up-flip/sign-in-up-flip.component';
 import Navbar from './components/navbar/navbar.component';
 import NewEntryForm from './components/entry-form/new-entry-form.component';
+import EditEntryForm from './components/entry-form/edit-entry-form.component';
 import Entries from './components/entries/entries.component';
 import Entry from './components/entry/entry.component';
 
@@ -54,7 +55,6 @@ const App = () => {
   // get entries
   useEffect(() => {
     if (user) {
-      console.log("fetching")
       fetchEntries()
     }
   }, [user]);
@@ -66,17 +66,18 @@ const App = () => {
     setUser(null);
   };
 
-  console.log("ENTRIES", entries)
-
   return (
     <div className="App">
       <MstContext.Provider value={{ user, entries, fetchEntries }}>
         <Navbar signUserOut={signUserOut} />
         <Switch>
+          <Route exact path='/'
+            render={() => <NewEntryForm />}
+          />
           <Route exact path='/signin'
             render={() => <SignInUpFlip />}
           />
-          <Route exact path='/newentry'
+          <Route exact path='/new'
             render={() => <NewEntryForm />}
           />
           <Route exact path='/entries'
@@ -84,11 +85,13 @@ const App = () => {
           />
           <Route exact path='/entry/:id'
             render={(props) => {
-              console.log('ENTRY ROUTE', entries)
               let entry = entries.find(entry => entry.id === props.match.params.id)
               return <Entry entry={entry} />
             }
             }
+          />
+          <Route exact path='/edit/:id'
+            render={() => <EditEntryForm />}
           />
         </Switch>
       </MstContext.Provider>

@@ -6,10 +6,8 @@ import MstContext from '../../context/mst.context';
 
 const Entries = () => {
     const { entries } = useContext(MstContext)
-    console.log(entries)
     return (
         <div>
-            <h1>Entries</h1>
             <div className="entries-list">
                 {
                     !entries || !entries.length ? (
