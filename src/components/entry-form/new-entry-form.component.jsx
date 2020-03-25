@@ -26,7 +26,7 @@ const initialState = {
     newSymptom: '',
     newTrigger: '',
     notes: ''
-};
+}
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -115,7 +115,6 @@ const NewEntryForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("SUBMIT")
         try {
             await firestore.collection('entries')
                 .add({
