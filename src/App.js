@@ -106,8 +106,8 @@ const App = () => {
 
   return (
     <div className="App">
-      <MstContext.Provider value={{ user, entries, isLoading, fetchEntries }}>
-        <Navbar signUserOut={signUserOut} />
+      <MstContext.Provider value={{ user, entries, isLoading, fetchEntries, signUserOut }}>
+        <Navbar />
         <main>
           {routes}
         </main>
