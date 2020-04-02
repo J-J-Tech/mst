@@ -70,34 +70,47 @@ const App = () => {
     setUser(null);
   };
 
+  let routes;
+
+  if (user) {
+    routes = (
+      <Switch>
+        <Route exact path='/'
+          render={() => <NewEntryForm />}
+        />
+        <Route exact path='/new'
+          render={() => <NewEntryForm />}
+        />
+        <Route exact path='/entries'
+          render={() => <Entries />}
+        />
+        <Route exact path='/entry/:id'
+          render={(props) => {
+            let entry = entries.find(entry => entry.id === props.match.params.id)
+            return <Entry entry={entry} />
+          }
+          }
+        />
+        <Route exact path='/edit/:id'
+          render={() => <EditEntryForm />}
+        />
+      </Switch>
+    )
+  } else {
+    routes = (
+      <Route exact path='/signin'
+        render={() => <SignInUpFlip />}
+      />
+    )
+  }
+
   return (
     <div className="App">
-      <MstContext.Provider value={{ user, entries, isLoading, fetchEntries }}>
-        <Navbar signUserOut={signUserOut} />
-        <Switch>
-          <Route exact path='/'
-            render={() => <NewEntryForm />}
-          />
-          <Route exact path='/signin'
-            render={() => <SignInUpFlip />}
-          />
-          <Route exact path='/new'
-            render={() => <NewEntryForm />}
-          />
-          <Route exact path='/entries'
-            render={() => <Entries />}
-          />
-          <Route exact path='/entry/:id'
-            render={(props) => {
-              let entry = entries.find(entry => entry.id === props.match.params.id)
-              return <Entry entry={entry} />
-            }
-            }
-          />
-          <Route exact path='/edit/:id'
-            render={() => <EditEntryForm />}
-          />
-        </Switch>
+      <MstContext.Provider value={{ user, entries, isLoading, fetchEntries, signUserOut }}>
+        <Navbar />
+        <main>
+          {routes}
+        </main>
       </MstContext.Provider>
     </div>
   );

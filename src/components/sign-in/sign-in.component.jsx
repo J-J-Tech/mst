@@ -35,7 +35,7 @@ const SignIn = ({ toggleIsFlipped }) => {
 
         try {
             await auth.signInWithEmailAndPassword(state.email, state.password);
-            history.push('/newentry');
+            history.push('/new');
         } catch (error) {
             if (error.code === 'auth/user-not-found') {
                 console.log('Email address not found');
