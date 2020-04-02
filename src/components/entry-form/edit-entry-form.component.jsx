@@ -92,7 +92,6 @@ const EditEntryForm = () => {
     }
 
     const handleAddNew = e => {
-        console.log(e)
         if (e.target.id === 'newSymptom' && state.newSymptom) {
             dispatch({ type: "UPDATE_SYMPTOMS", value: state.newSymptom });
         }
@@ -120,7 +119,7 @@ const EditEntryForm = () => {
                     notes: state.notes,
                     userId: state.userId
                 })
-            fetchEntries();
+            await fetchEntries();
             history.push('/entries');
         } catch (error) {
             alert("Unable to update entry");

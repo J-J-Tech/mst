@@ -18,6 +18,7 @@ import MstContext from './context/mst.context';
 const App = () => {
   const [user, setUser] = useState(null);
   const [entries, setEntries] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Auth Listener
   useEffect(() => {
@@ -38,6 +39,7 @@ const App = () => {
 
   const fetchEntries = async () => {
     try {
+      setIsLoading(true)
       const snapshot = await firestore.collection('entries')
         .where("userId", "==", user.id)
         .orderBy("date", "desc")
@@ -47,7 +49,9 @@ const App = () => {
         let data = doc.data()
         return { ...data, id: doc.id }
       }));
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -68,7 +72,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <MstContext.Provider value={{ user, entries, fetchEntries }}>
+      <MstContext.Provider value={{ user, entries, isLoading, fetchEntries }}>
         <Navbar signUserOut={signUserOut} />
         <Switch>
           <Route exact path='/'

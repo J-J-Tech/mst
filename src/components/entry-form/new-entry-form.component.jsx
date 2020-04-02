@@ -98,7 +98,6 @@ const NewEntryForm = () => {
     }
 
     const handleAddNew = e => {
-        console.log(e)
         if (e.target.id === 'newSymptom' && state.newSymptom) {
             dispatch({ type: "UPDATE_SYMPTOMS", value: state.newSymptom });
         }
@@ -124,7 +123,7 @@ const NewEntryForm = () => {
                     notes: state.notes,
                     userId: user.id
                 })
-            fetchEntries();
+            await fetchEntries();
             history.push('/entries');
         } catch (error) {
             alert("Unable to save entry");
@@ -144,10 +143,10 @@ const NewEntryForm = () => {
                 {/* Tabs */}
                 <ul className="nav nav-tabs entry-form__tabs-container" id="myTab" role="tablist">
                     <li className="nav-item">
-                        <a className="nav-link active" id="home-tab" data-toggle="tab" href="#symptoms" role="tab" aria-controls="symptoms" aria-selected="true">Symptoms</a>
+                        <a className="nav-link active" id="symptoms-tab" data-toggle="tab" href="#symptoms" role="tab" aria-controls="symptoms" aria-selected="true">Symptoms</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" id="profile-tab" data-toggle="tab" href="#triggers" role="tab" aria-controls="triggers" aria-selected="false">Triggers</a>
+                        <a className="nav-link" id="triggers-tab" data-toggle="tab" href="#triggers" role="tab" aria-controls="triggers" aria-selected="false">Triggers</a>
                     </li>
                 </ul>
                 <div className="tab-content" id="myTabContent">
