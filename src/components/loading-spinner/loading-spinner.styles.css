@@ -1,0 +1,8 @@
+.spinner-container {
+    margin-top: 255px;
+}
+
+.spinner {
+    width: 50px;
+    background-color: transparent;
+}
